@@ -1,0 +1,65 @@
+$w:100px;
+$h:100px;
+
+@import "base";
+@mixin border ($margin:50px,$padding:50px){
+    border:1px solid black;
+    margin: $margin;
+    padding: $padding;
+}
+div{
+    width: $w;
+    height: $h;
+    @include border(20px,10px);
+    a{
+        color:red;
+        &:hover{
+            color:green;
+        }
+    }
+}
+
+
+p{
+    @extend div;
+    background-color: red;
+    opacity: 0.5;
+    
+}
+
+$count:12;
+@for $i from 1 through $count{
+    .col-#{$i}{
+        width: 100px / 12 * $i;
+    }
+} 
+
+
+$arrs: success primary dark danger info;
+
+@each $arr in $arrs {
+    .icon-#{$arr}{
+        background: url(#{$arr}.png) no-repeat;
+    }
+}
+
+$num:6;
+@while $num > 0{
+    .item#{$num}{
+        width: 10px * $num;
+    }
+    $num:$num - 1;
+}
+
+$color:(dark:black,light:white);
+
+@function color($key){
+    @if not map-has-key($color,$key){
+        @warn '没有key';
+    }
+    @return map-get($color,$key);
+}
+
+body{
+    color:color(light);
+}
